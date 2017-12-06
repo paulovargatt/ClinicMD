@@ -14,7 +14,7 @@
             <div class="box-body box-profile">
                 <img class="profile-user-img img-responsive img-circle" src="{{$paciente->foto == "" ? "/images/user.png" : $paciente->foto}}" alt="User profile picture">
 
-                <h3 class="profile-username text-center">{{$paciente->nome}}</h3>
+                <h3 class="profile-username text-center">{{$paciente->nome}} ({{$paciente->nascimento->diffForHumans(null,true)}})</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
                         <b>Prontuario</b> <a class="pull-right">{{$paciente->prontuario == "" ? "#" : $paciente->prontuario}}</a>
