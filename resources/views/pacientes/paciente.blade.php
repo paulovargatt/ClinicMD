@@ -6,6 +6,12 @@
 @stop
 
 @push('css')
+    <style>
+        .tarde{background: #075936 !important}
+        .noite{background: #272727 !important}
+
+    </style>
+
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     @endpush
 @section('content')
@@ -137,7 +143,10 @@
                     </div>
                 </div>
                 <div class="pull-left">
-                <button class="btn btn-success" style="margin: 5px 15px">Fazer Evolução</button>
+                    <button type="button" onclick="addForm()" style="margin: 0px 15px" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+                        Fazer Evolução
+                    </button>
+
                 </div>
                 <div class="pull-right">
                     <button class="btn btn-primary" style="margin: 5px 15px">Salvar modificações</button>
@@ -149,10 +158,104 @@
 <br>
     <div class="col-md-12">
         <div class="box box-primary">
-            <h4 class="text-center">Ultimas Evoluções:</h4>
+            <div class="box-header with-border">
+                <h3 class="box-title">Movimentações do Paciente:</h3>
+
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                        <tr>
+                            <th>Turno</th>
+                            <th style="width: 150px;">Horário do Registro</th>
+                            <th>Criado Por</th>
+                            <th>Mensagem</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    @foreach($movimentacoes as $movimentacao)
+                        @if(Auth::user()->type == 1)
+                        <tr>
+                            <td><span class="label label-primary {{$movimentacao->turno}}" style="text-transform: uppercase">{{$movimentacao->turno}}</span></td>
+
+                            <td>{{$movimentacao->created_at->format('d/m/Y')}} {{ $movimentacao->created_at->format('H:i:s')}}</td>
+                            <td>@if ($movimentacao->type_user == 1)
+                                    {{'Enfermagem'}}
+                                    @elseif ($movimentacao->type_user == 2)
+                                    {{'Médica'}}
+                                    @else
+                                    {{'Administração'}}
+                            @endif</td>
+                            <td>{{$movimentacao->descricao}}</td>
+                        </tr>
+                        @endif
+                    @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer clearfix" style="">
+                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Carregar +</a>
+            </div>
+            <!-- /.box-footer -->
 
         </div>
     </div>
+
+
+    <!-- MODAL -->
+
+    <div class="modal fade" id="modal-form">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Movimentação</h4>
+                </div>
+                <div class="modal-body">
+                 <form method="post" id="modal" class="form-horizontal" data-toggle="validator">
+                     {{csrf_field()}} {{method_field('POST')}}
+                        <input type="hidden" id="id" name="id">
+                        <div class="radio">
+                            <label style="margin-right: 10px;">
+                                <input name="turnos" id="manha" value="manha" checked="" type="radio">
+                                <span class="label label-primary">Manhã </span>
+                            </label>
+                            <label style="margin-right: 10px;">
+                                <input name="turnos" id="tarde" value="tarde" checked="" type="radio">
+                                <span class="label label-success">Tarde  </span>
+                            </label>
+                            <label>
+                                <input name="turnos" id="noite" value="noite" checked="" type="radio">
+                                <span class="label label-bl" style="background: #090909">Noite</span>
+                            </label>
+                        </div>
+
+                        <div class="form-group" style="padding: 15px 13px">
+                            <label>Movimentação</label>
+                            <textarea class="form-control" rows="3" name="descricao" placeholder="Digite a Evolução Aqui"></textarea>
+                        </div>
+
+                     <div class="modal-footer">
+                         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
+                         <div class="pull-right"><button type="submit" class="btn btn-primary">Salvar</button></div>
+                     </div>
+                 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
 
 @stop
 
@@ -160,6 +263,41 @@
     <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
 
     <script>
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var paciente = "{{$paciente->id}}";
+
+        function addForm() {
+            save_method = "add";
+            $('input[name=_method]').val('POST');
+            $('input[name=_method]').val('POST');
+            $('#modal-form').modal('show');
+            $('#modal-title').text('Adicionar');
+        }
+
+        $(document).on('#modal submit', function (e) {
+            e.preventDefault();
+            var id = $('#id').val();
+            if (save_method == 'edit') {
+                url = "/edituser/" + id;
+            }
+            else{
+                url = "/new-movimentation/" + paciente;
+            }
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: $('#modal-form form').serialize(),
+                success: function ($data) {
+                    $('#modal-form').modal('hide');
+                    $('.table').load(' .table');
+                },
+                error : function(){
+                    alert('Não foi possível salvar esse registro');
+                }
+            });
+        });
+
+
         $('#datepicker').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true
