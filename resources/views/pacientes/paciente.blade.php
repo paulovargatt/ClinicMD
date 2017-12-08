@@ -184,7 +184,7 @@
                         <tr>
                             <td><span class="label label-primary {{$movimentacao->turno}}" style="text-transform: uppercase">{{$movimentacao->turno}}</span></td>
 
-                            <td>{{$movimentacao->created_at->format('d/m/Y')}} {{ $movimentacao->created_at->format('H:i:s')}}</td>
+                            <td>{{$movimentacao->created_at->format('d/m/Y')}} {{ $movimentacao->created_at->subHour(2)->format('H:i')}}</td>
                             <td>@if ($movimentacao->type_user == 1)
                                     {{'Enfermagem'}}
                                     @elseif ($movimentacao->type_user == 2)

@@ -23,8 +23,8 @@ class Pacientes extends Controller
 
         if (Gate::allows('accesso-movimentacoes', Auth::user()->type)) {
             $movimentacoes = Movimentacoes::where('paciente_id', '=', $id)
-                ->orderBy('created_at', 'desc')
                 ->where('type_user','=',Auth::user()->type)
+                ->orderBy('created_at', 'desc')
                 ->get();
         }else{
             $movimentacoes = Movimentacoes::where('paciente_id', '=', $id)
