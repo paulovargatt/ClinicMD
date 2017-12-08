@@ -179,8 +179,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                    @foreach($movimentacoes as $movimentacao)
-                        @if(Auth::user()->type == 1)
+
+                        @foreach($movimentacoes as $movimentacao)
                         <tr>
                             <td><span class="label label-primary {{$movimentacao->turno}}" style="text-transform: uppercase">{{$movimentacao->turno}}</span></td>
 
@@ -194,9 +194,7 @@
                             @endif</td>
                             <td>{{$movimentacao->descricao}}</td>
                         </tr>
-                        @endif
                     @endforeach
-
                         </tbody>
                     </table>
                 </div>

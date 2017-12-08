@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Gate;
 
 class Pacientes extends Controller
 {
@@ -20,9 +21,16 @@ class Pacientes extends Controller
     {
         $paciente = Paciente::find($id);
 
-        $movimentacoes = Movimentacoes::where('paciente_id', '=', $id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        if (Gate::allows('accesso-movimentacoes', Auth::user()->type)) {
+            $movimentacoes = Movimentacoes::where('paciente_id', '=', $id)
+                ->orderBy('created_at', 'desc')
+                ->where('type_user','=',Auth::user()->type)
+                ->get();
+        }else{
+            $movimentacoes = Movimentacoes::where('paciente_id', '=', $id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
 
         return view('pacientes.paciente', compact('paciente','movimentacoes'));
     }

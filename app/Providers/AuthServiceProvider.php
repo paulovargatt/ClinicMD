@@ -25,6 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('accesso-movimentacoes', function ($user, $movimentacao){
+            if ($user->type == 1 ){
+                return true;
+            }
+            return false;
+        });
     }
 }
