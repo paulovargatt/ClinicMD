@@ -7,12 +7,14 @@
 
 @push('css')
     <style>
-        .tarde{background: #075936 !important}
-        .noite{background: #272727 !important}
+        .tarde{background: #075936 !important; text-transform: uppercase}
+        .noite{background: #272727 !important; text-transform: uppercase}
+        .manha{text-transform: uppercase}
 
     </style>
 
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap.min.css">
     @endpush
 @section('content')
     <div class="col-md-3">
@@ -169,41 +171,28 @@
             <!-- /.box-header -->
             <div class="box-body" style="">
                 <div class="table-responsive">
-                    <table class="table no-margin">
+
+                    <table id="movimentacoes" class="table table-bordered table-striped table-condensed ">
                         <thead>
                         <tr>
                             <th>Turno</th>
-                            <th style="width: 150px;">Horário do Registro</th>
+                            <th>Data</th>
                             <th>Criado Por</th>
                             <th>Mensagem</th>
+                            <th>Ações</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        @foreach($movimentacoes as $movimentacao)
-                        <tr>
-                            <td><span class="label label-primary {{$movimentacao->turno}}" style="text-transform: uppercase">{{$movimentacao->turno}}</span></td>
-
-                            <td>{{$movimentacao->created_at->format('d/m/Y')}} {{ $movimentacao->created_at->subHour(2)->format('H:i')}}</td>
-                            <td>@if ($movimentacao->type_user == 1)
-                                    {{'Enfermagem'}}
-                                    @elseif ($movimentacao->type_user == 2)
-                                    {{'Médica'}}
-                                    @else
-                                    {{'Administração'}}
-                            @endif</td>
-                            <td>{{$movimentacao->descricao}}</td>
-                        </tr>
-                    @endforeach
                         </tbody>
                     </table>
+
                 </div>
                 <!-- /.table-responsive -->
             </div>
             <!-- /.box-body -->
             <div class="box-footer clearfix" style="">
-                <a href="javascript:void(0)" class="btn btn-sm btn-info btn-flat pull-left">Carregar +</a>
-            </div>
+                          </div>
             <!-- /.box-footer -->
 
         </div>
@@ -264,6 +253,23 @@
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var paciente = "{{$paciente->id}}";
 
+        var table =  $('#movimentacoes').DataTable({
+            processing:true,
+            serverSide: true,
+            ajax: '/movimentacoes/' + paciente,
+            columns: [
+                {data: 'turno', name: 'turno',orderable:false},
+                {data: 'created_at', name: 'created_at'},
+                {data: 'type_user', name: 'type_user'},
+                {data: 'descricao', name: 'descricao'},
+                {data: 'action', name: 'action', orderable:false, searchable:true},
+            ],
+            "language": {
+                "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
+            }
+        });
+
+
         function addForm() {
             save_method = "add";
             $('input[name=_method]').val('POST');
@@ -287,7 +293,7 @@
                 data: $('#modal-form form').serialize(),
                 success: function ($data) {
                     $('#modal-form').modal('hide');
-                    $('.table').load(' .table');
+                      table.ajax.reload();
                 },
                 error : function(){
                     alert('Não foi possível salvar esse registro');
@@ -299,6 +305,6 @@
         $('#datepicker').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true
-        })
+        });
     </script>
 @endpush

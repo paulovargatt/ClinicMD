@@ -160,6 +160,5 @@ return [
     'plugins' => [
         'datatables' => true,
         'select2'    => true,
-        'datepicker'    => true
     ],
 ];

@@ -25,6 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        //SE É Tecnica quem esta acessando (TYPE = 1):
         Gate::define('accesso-movimentacoes', function ($user, $movimentacao){
             if ($user->type == 1 ){
                 return true;
