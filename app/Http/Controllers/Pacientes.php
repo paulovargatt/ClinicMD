@@ -72,10 +72,10 @@ class Pacientes extends Controller
             ->addColumn('type_user', function ($movimentacoes) {
                 if($movimentacoes->type_user == 1){
                     return "Enfermagem";
-                }if($movimentacoes->type_user == 2){
+                }elseif($movimentacoes->type_user == 2){
                     return "Médica";
                 }else{
-                    "Administração";
+                    return "Administração";
                 }
             })
             ->addColumn('action', function ($movimentacoes){
