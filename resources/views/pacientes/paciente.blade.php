@@ -14,7 +14,6 @@
     </style>
 
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.16/css/dataTables.bootstrap.min.css">
     @endpush
 @section('content')
     <div class="col-md-3">
@@ -248,7 +247,7 @@
 
 @push('js')
     <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
     <script>
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var paciente = "{{$paciente->id}}";
@@ -282,7 +281,7 @@
             e.preventDefault();
             var id = $('#id').val();
             if (save_method == 'edit') {
-                url = "/edituser/" + id;
+                url = "/edit-movimentation/" + id;
             }
             else{
                 url = "/new-movimentation/" + paciente;
@@ -291,6 +290,12 @@
                 url: url,
                 type: "POST",
                 data: $('#modal-form form').serialize(),
+                beforeSend: function(){
+                    $('.loader').fadeIn();
+                },
+                complete: function(){
+                    $('.loader').fadeOut("slow");
+                },
                 success: function ($data) {
                     $('#modal-form').modal('hide');
                       table.ajax.reload();
@@ -300,6 +305,47 @@
                 }
             });
         });
+
+        function editMovi(id) {
+            save_method = "edit";
+            $.ajax({
+                url: '/get-movimentation/' + id,
+                type: "GET",
+                success: function (data) {
+                    $('#modal-form').modal('show');
+                    $('input[name=turnos][value="'+data.turno+'"]').prop("checked", true);
+                    $('textarea[name=descricao]').val(data.descricao);
+                    $('input[name=id]').val(data.id);
+                },
+                error: function () {
+                    alert('Não foi possível salvar esse registro');
+                }
+            });
+        }
+
+
+        function deleteMovi(id) {
+                $('[data-toggle=confirmation]').confirmation({
+                    rootSelector: '[data-toggle=confirmation]',
+                    btnOkClass:	'btn btn-xs btn-Warning',
+                    btnCancelClass: 'btn-xs btn-default',
+                    btnOkClass:	'btn btn-xs btn-danger',
+                    btnOkLabel:	'Delete ?',
+                    btnCancelLabel:	'No',
+                    onConfirm: function() {
+                        $.ajax({
+                            url: '/delete-movimentation/' + id,
+                            type: "GET",
+                            success: function ($data) {
+                                table.ajax.reload();
+                            },
+                            error : function(){
+                                alert('Não foi possível salvar esse registro');
+                            }
+                        });
+                    }
+                });
+        }
 
 
         $('#datepicker').datepicker({

@@ -14,5 +14,10 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::post('/new-movimentation/{id}', 'Pacientes@newMovimentation');
+    Route::post('/edit-movimentation/{id}', 'Pacientes@editMovimentation');
+
+    Route::get('/delete-movimentation/{id}', 'Pacientes@deleteMovimentation');
+    Route::get('/get-movimentation/{id}', 'Pacientes@getMovimentation');
+
 });
 

@@ -22,8 +22,6 @@ class Pacientes extends Controller
     public function paciente($id)
     {
         $paciente = Paciente::find($id);
-        //SE É Tecnica quem esta acessando (TYPE = 1):
-
         return view('pacientes.paciente', compact('paciente'));
     }
 
@@ -34,8 +32,17 @@ class Pacientes extends Controller
             'turno' => $request['turnos'],
             'descricao' => $request['descricao'],
         ];
-
         return Movimentacoes::create($data);
+    }
+
+    public function editMovimentation(Request $request, $id){
+        $data = Movimentacoes::find($id);
+        $data->turno = $request->get('turnos');
+        $data->descricao = $request->get('descricao');
+        $data->update();
+        $ret = array('status' => 'success',
+                     'msg' => 'Updated');
+        return response()->json($ret);
     }
 
     public function jsonDataPacientes($id)
@@ -72,12 +79,26 @@ class Pacientes extends Controller
                 }
             })
             ->addColumn('action', function ($movimentacoes){
+                if($movimentacoes->type_user == Auth::user()->type){
                 return
-                    '<a onclick="editForm('. $movimentacoes->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a> ' .
-                    '<a onclick="deleteData(' . $movimentacoes->id . ')" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a>';
-            })
+                    '<a onclick="editMovi('. $movimentacoes->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a> ' .
+                    '<a onclick="deleteMovi(' . $movimentacoes->id . ')" data-toggle="confirmation" data-popout="true" data-placement="left" data-original-title="Deletar ?" class="btn btn-danger btn-xs delete-movimentacao"><i class="glyphicon glyphicon-trash"></i></a>';
+                }
+                })
             ->rawColumns(['turno','action'])
             ->make(true);
+    }
+
+
+    public function deleteMovimentation($id){
+
+        return Movimentacoes::destroy($id);
+    }
+
+    public function getMovimentation($id){
+       $data = Movimentacoes::find($id);
+
+       return $data;
     }
 
 }
