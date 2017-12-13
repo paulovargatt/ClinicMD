@@ -124,6 +124,11 @@ return [
                 ]
             ],
         ],
+        [
+            'text'    => 'Cadastrar Usuários',
+            'icon'    => 'user',
+            'can'   => 'admin'
+        ],
     ],
 
     /*

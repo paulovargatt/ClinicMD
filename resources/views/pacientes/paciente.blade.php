@@ -44,8 +44,9 @@
                     <div class="form-group">
                         <label>Sexo:</label>
                         <div class="input-group date">
-                          <select class="form-control" style="width: 150px" >
-                              <option >{{$paciente->sexo}}</option>
+                          <select class="form-control" id="sexo" style="width: 150px" >
+                              <option value="feminino" {{$paciente->sexo == "feminino" ? "selected" : ''}}>Feminino</option>
+                              <option value="masculino" {{$paciente->sexo == "masculino" ? "selected" : ''}}>Masculino</option>
                           </select>
                         </div>
                     </div>
@@ -55,8 +56,11 @@
                     <div class="form-group">
                         <label>Estado Civil:</label>
                         <div class="input-group date">
-                          <select class="form-control" style="width: 150px" >
-                              <option >{{$paciente->est_civil}}</option>
+                          <select id="est-civil" class="form-control" style="width: 150px" >
+                              <option value="casado" {{$paciente->est_civil == "casado" ? "selected" : ''}}>Casado(a)</option>
+                              <option value="solteiro" {{$paciente->est_civil == "solteiro" ? "selected" : ''}}>Solteiro(a)</option>
+                              <option value="viuvo" {{$paciente->est_civil == "viuvo" ? "selected" : ''}}>Viuvo(a)</option>
+                              <option value="separado" {{$paciente->est_civil == "separado" ? "selected" : ''}}>Separado(a)</option>
                           </select>
                         </div>
                     </div>
@@ -69,7 +73,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" class="form-control pull-right" value="{{$paciente->nascimento->format('d/m/Y')}}" id="datepicker">
+                            <input type="text" class="form-control pull-right" name="nascimento" value="{{$paciente->nascimento->format('d/m/Y')}}" id="datepicker">
                         </div>
                     </div>
                 </div>
@@ -150,7 +154,7 @@
 
                 </div>
                 <div class="pull-right">
-                    <button class="btn btn-primary" style="margin: 5px 15px">Salvar modificações</button>
+                    <button class="btn btn-primary" id="salva-ficha" style="margin: 5px 15px">Salvar modificações</button>
                 </div>
             </div>
         </div>
@@ -346,6 +350,32 @@
                     }
                 });
         }
+
+        $('#salva-ficha').on('click',function () {
+           var sexo = $('#sexo').val();
+           var civil = $('#est-civil').val();
+
+            $.ajax({
+                url: paciente + '/update',
+                type: "POST",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "sexo": sexo,
+                    "est": civil,
+                    "nascimento": $('input[name=nascimento]').val()
+                },
+                beforeSend: function () {
+                    $('.loader').fadeIn();
+                },
+                complete: function () {
+                    $('.loader').fadeOut("slow");
+                },
+                success: function ($data) {
+                    $('.profile-username').load(' .profile-username')
+                },
+
+            });
+        });
 
 
         $('#datepicker').datepicker({
