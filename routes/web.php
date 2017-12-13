@@ -10,6 +10,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/pacientes', 'Pacientes@index')->name('list');
     Route::get('/paciente/{id}', 'Pacientes@paciente')->name('paciente');
+
+    Route::post('/paciente/{id}/update', 'Pacientes@updatePaciente');
+
+
     Route::get('/movimentacoes/{id}', 'Pacientes@jsonDataPacientes')->name('jsonDataPacientes');
 
 
