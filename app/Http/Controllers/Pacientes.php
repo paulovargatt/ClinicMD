@@ -25,6 +25,18 @@ class Pacientes extends Controller
         return view('pacientes.paciente', compact('paciente'));
     }
 
+    public function updatePaciente(Request $request, $id){
+        $paciente = Paciente::find($id);
+        $paciente->sexo = $request->get('sexo');
+        $paciente->est_civil = $request->get('est');
+        $paciente->nascimento =  Carbon::createFromFormat('d/m/Y', $request->get('nascimento'));
+        $paciente->update();
+
+
+
+    }
+
+
     public function newMovimentation(Request $request, $id){
        $data = [
             'paciente_id' => $id,
