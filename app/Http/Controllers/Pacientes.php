@@ -30,6 +30,10 @@ class Pacientes extends Controller
         $paciente->sexo = $request->get('sexo');
         $paciente->est_civil = $request->get('est');
         $paciente->nascimento =  Carbon::createFromFormat('d/m/Y', $request->get('nascimento'));
+        $paciente->prontuario = $request->get('prontuario');
+        $paciente->matricula = $request->get('matricula');
+        $paciente->convenio = $request->get('convenio');
+
         $paciente->update();
 
 

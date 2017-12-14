@@ -11,6 +11,16 @@
         .noite{background: #272727 !important; text-transform: uppercase}
         .manha{text-transform: uppercase}
 
+
+        .input-small{
+            width: 33px;
+            text-align: center;
+            font-size: 19px;
+            margin-top: -6px;
+            border: 0px;
+            font-weight: bold;
+            color: #3c8dbc;
+        }
     </style>
 
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
@@ -24,13 +34,13 @@
                 <h3 class="profile-username text-center">{{$paciente->nome}} ({{$paciente->nascimento->diffForHumans(null,true)}})</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Prontuario</b> <a class="pull-right">{{$paciente->prontuario == "" ? "#" : $paciente->prontuario}}</a>
+                        <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$paciente->prontuario == "" ? "#" : $paciente->prontuario}}" />
                     </li>
                     <li class="list-group-item">
-                        <b>Matricula</b> <a class="pull-right">{{$paciente->matricula == "" ? "#" : $paciente->matricula}}</a>
+                        <b>Matricula</b> <input  class="pull-right input-small matricula" value="{{$paciente->matricula == "" ? "#" : $paciente->matricula}}">
                     </li>
                     <li class="list-group-item">
-                        <b>Convenio</b> <a class="pull-right">{{$paciente->convenio == "" ? "#" : $paciente->convenio}}</a>
+                        <b>Convenio</b> <input c class="pull-right input-small conv" value="{{$paciente->convenio == "" ? "#" : $paciente->convenio}}"/>
                     </li>
                 </ul>
             </div>
@@ -81,49 +91,42 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Identidade</label>
-                        <input type="text" class="form-control" value="{{$paciente->identidade}}">
+                        <input type="text" class="form-control identidade" value="{{$paciente->identidade}}">
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>CPF:</label>
-                        <input type="text" class="form-control" value="{{$paciente->cpf}}">
+                        <input type="text" class="form-control cpf" value="{{$paciente->cpf}}">
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>E-mail:</label>
-                        <input type="text" class="form-control" value="{{$paciente->email}}">
+                        <input type="text" class="form-control email" value="{{$paciente->email}}">
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
                         <label>Logradouro</label>
-                        <input type="text" class="form-control" value="{{$paciente->logradouro}}">
+                        <input type="text" class="form-control logradouro"  value="{{$paciente->logradouro}}">
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Complemento</label>
-                        <input type="text" class="form-control" value="{{$paciente->complemento}}">
+                        <input type="text" class="form-control complemento" value="{{$paciente->complemento}}">
                     </div>
                 </div>
 
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Bairro</label>
-                        <input type="text" class="form-control" value="{{$paciente->bairro}}">
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Cidade</label>
-                        <input type="text" class="form-control" value="{{$paciente->cidade}}">
+                        <input type="text" class="form-control bairro" value="{{$paciente->bairro}}">
                     </div>
                 </div>
 
@@ -131,6 +134,13 @@
                     <div class="form-group">
                         <label>UF</label>
                         <input type="text" class="form-control" value="{{$paciente->uf}}">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Cidade</label>
+                        <input type="text" class="form-control cidade" value="{{$paciente->cidade}}">
                     </div>
                 </div>
 
@@ -261,11 +271,11 @@
             serverSide: true,
             ajax: '/movimentacoes/' + paciente,
             columns: [
-                {data: 'turno', name: 'turno',orderable:false},
+                {data: 'turno', name: 'turno',orderable:true},
                 {data: 'created_at', name: 'created_at'},
                 {data: 'type_user', name: 'type_user'},
-                {data: 'descricao', name: 'descricao'},
-                {data: 'action', name: 'action', orderable:false, searchable:true},
+                {data: 'descricao', name: 'descricao',orderable:false},
+                {data: 'action', name: 'action', orderable:false},
             ],
             "language": {
                 "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
@@ -352,17 +362,17 @@
         }
 
         $('#salva-ficha').on('click',function () {
-           var sexo = $('#sexo').val();
-           var civil = $('#est-civil').val();
-
             $.ajax({
                 url: paciente + '/update',
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    "sexo": sexo,
-                    "est": civil,
-                    "nascimento": $('input[name=nascimento]').val()
+                    "sexo":  $('#sexo').val(),
+                    "est": $('#est-civil').val(),
+                    "nascimento": $('input[name=nascimento]').val(),
+                    "prontuario": $('.pront').val(),
+                    "matricula": $('.matricula').val(),
+                    "convenio": $('.conv').val()
                 },
                 beforeSend: function () {
                     $('.loader').fadeIn();
