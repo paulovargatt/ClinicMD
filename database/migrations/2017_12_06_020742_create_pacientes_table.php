@@ -18,7 +18,7 @@ class CreatePacientesTable extends Migration
             $table->string('nome');
             $table->integer('prontuario');
             $table->dateTime('cadastro');
-            $table->dateTime('nascimento');
+            $table->dateTime('nascimento')->default('1990-01-01 00:00:00');
             $table->string('foto');
             $table->string('convenio');
             $table->string('matricula');
@@ -31,7 +31,7 @@ class CreatePacientesTable extends Migration
             $table->string('logradouro');
             $table->string('complemento');
             $table->string('bairro');
-            $table->integer('city_id');
+            $table->integer('city_id')->default('7994');
             $table->string('uf');
             $table->string('cep');
             $table->string('telefones');

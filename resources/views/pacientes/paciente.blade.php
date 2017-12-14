@@ -34,7 +34,7 @@
                 <h3 class="profile-username text-center">{{$paciente->nome}} ({{$paciente->nascimento->diffForHumans(null,true)}})</h3>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$paciente->prontuario == "" ? "#" : $paciente->prontuario}}" />
+                        <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$paciente->prontuario == "" ? "00" : $paciente->prontuario}}" />
                     </li>
                     <li class="list-group-item">
                         <b>Matricula</b> <input  class="pull-right input-small matricula" value="{{$paciente->matricula == "" ? "#" : $paciente->matricula}}">
@@ -123,6 +123,8 @@
                     </div>
                 </div>
 
+
+
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>Bairro</label>
@@ -133,7 +135,7 @@
                 <div class="col-md-1" style="padding: 0px">
                     <div class="form-group">
                         <label>UF</label>
-                        <select id="uf" style="padding: 0"  default="{{$city[0]->uf}}"  class="form-control"></select>
+                        <select id="uf" style="padding: 0"  default="{{$city[0]->uf}}"   class="form-control"></select>
                     </div>
                 </div>
 

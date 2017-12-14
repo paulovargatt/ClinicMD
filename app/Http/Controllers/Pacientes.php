@@ -23,13 +23,16 @@ class Pacientes extends Controller
     public function paciente($id)
     {
         $paciente = Paciente::find($id);
+
         $city = DB::table('pacientes')
-                ->join('cidades', 'pacientes.cidade', '=', 'cidades.id')
+                ->join('cidades', 'pacientes.city_id', '=', 'cidades.id')
                 ->select('pacientes.id','cidades.uf', 'cidades.nome as city','cidades.id as idcity')
                 ->where('pacientes.id', $id)
                 ->get()->toArray();
 
-        //dd($city);
+   
+                
+
         return view('pacientes.paciente', compact('paciente','city'));
     }
 
@@ -42,7 +45,7 @@ class Pacientes extends Controller
         $paciente->matricula = $request->get('matricula');
         $paciente->convenio = $request->get('convenio');
         $paciente->uf = $request->get('uf');
-        $paciente->cidade = $request->get('cidade');
+        $paciente->city_id = $request->get('cidade');
 
         $paciente->update();
 
