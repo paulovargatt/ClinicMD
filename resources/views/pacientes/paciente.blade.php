@@ -130,20 +130,21 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-1" style="padding: 0px">
                     <div class="form-group">
                         <label>UF</label>
-                        <input type="text" class="form-control" value="{{$paciente->uf}}">
+                        <select id="uf" style="padding: 0"  default="{{$city[0]->uf}}"  class="form-control"></select>
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>Cidade</label>
-                        <input type="text" class="form-control cidade" value="{{$paciente->cidade}}">
+                        <select id="cidade" default="{{$city[0]->idcity}}" style="width: 100%"  class="form-control" >
+
+                        </select>
                     </div>
                 </div>
-
                 <div class="col-md-2">
                     <div class="form-group">
                         <label>CEP</label>
@@ -262,9 +263,16 @@
 @push('js')
     <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
+    <script src="/vendor/artesaos/cidades/js/scripts.js"></script>
     <script>
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var paciente = "{{$paciente->id}}";
+
+        $('#uf').ufs({
+            onChange: function(uf){
+                $('#cidade').cidades({uf: uf});
+            }
+        });
 
         var table =  $('#movimentacoes').DataTable({
             processing:true,
@@ -372,7 +380,9 @@
                     "nascimento": $('input[name=nascimento]').val(),
                     "prontuario": $('.pront').val(),
                     "matricula": $('.matricula').val(),
-                    "convenio": $('.conv').val()
+                    "convenio": $('.conv').val(),
+                    "uf": $('#uf').val(),
+                    "cidade": $('#cidade').val(),
                 },
                 beforeSend: function () {
                     $('.loader').fadeIn();

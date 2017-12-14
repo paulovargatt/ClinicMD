@@ -8,6 +8,7 @@ use App\Paciente;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Gate;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Services\DataTable;
 
@@ -22,7 +23,14 @@ class Pacientes extends Controller
     public function paciente($id)
     {
         $paciente = Paciente::find($id);
-        return view('pacientes.paciente', compact('paciente'));
+        $city = DB::table('pacientes')
+                ->join('cidades', 'pacientes.cidade', '=', 'cidades.id')
+                ->select('pacientes.id','cidades.uf', 'cidades.nome as city','cidades.id as idcity')
+                ->where('pacientes.id', $id)
+                ->get()->toArray();
+
+        //dd($city);
+        return view('pacientes.paciente', compact('paciente','city'));
     }
 
     public function updatePaciente(Request $request, $id){
@@ -33,6 +41,8 @@ class Pacientes extends Controller
         $paciente->prontuario = $request->get('prontuario');
         $paciente->matricula = $request->get('matricula');
         $paciente->convenio = $request->get('convenio');
+        $paciente->uf = $request->get('uf');
+        $paciente->cidade = $request->get('cidade');
 
         $paciente->update();
 

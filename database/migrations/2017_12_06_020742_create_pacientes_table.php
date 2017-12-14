@@ -31,7 +31,7 @@ class CreatePacientesTable extends Migration
             $table->string('logradouro');
             $table->string('complemento');
             $table->string('bairro');
-            $table->string('cidade');
+            $table->integer('city_id');
             $table->string('uf');
             $table->string('cep');
             $table->string('telefones');
