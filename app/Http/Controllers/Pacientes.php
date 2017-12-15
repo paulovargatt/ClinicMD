@@ -11,6 +11,7 @@ use Gate;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Services\DataTable;
+use Validator;
 
 class Pacientes extends Controller
 {
@@ -29,16 +30,13 @@ class Pacientes extends Controller
                 ->select('pacientes.id','cidades.uf', 'cidades.nome as city','cidades.id as idcity')
                 ->where('pacientes.id', $id)
                 ->get()->toArray();
-
-   
-                
-
         return view('pacientes.paciente', compact('paciente','city'));
     }
 
     public function updatePaciente(Request $request, $id){
         $paciente = Paciente::find($id);
         $paciente->sexo = $request->get('sexo');
+        $paciente->nome = $request->get('name');
         $paciente->est_civil = $request->get('est');
         $paciente->nascimento =  Carbon::createFromFormat('d/m/Y', $request->get('nascimento'));
         $paciente->prontuario = $request->get('prontuario');
@@ -46,11 +44,15 @@ class Pacientes extends Controller
         $paciente->convenio = $request->get('convenio');
         $paciente->uf = $request->get('uf');
         $paciente->city_id = $request->get('cidade');
-
+        $paciente->identidade = $request->get('identidade');
+        $paciente->cpf = $request->get('cpf');
+        $paciente->email = $request->get('email');
+        $paciente->telefones = $request->get('fones');
+        $paciente->logradouro = $request->get('logradouro');
+        $paciente->bairro = $request->get('bairro');
+        $paciente->complemento = $request->get('complemento');
+        $paciente->cep = $request->get('cep');
         $paciente->update();
-
-
-
     }
 
 
@@ -118,7 +120,6 @@ class Pacientes extends Controller
             ->make(true);
     }
 
-
     public function deleteMovimentation($id){
 
         return Movimentacoes::destroy($id);
@@ -128,6 +129,30 @@ class Pacientes extends Controller
        $data = Movimentacoes::find($id);
 
        return $data;
+    }
+
+    public function fotoPaciente(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        if ($validator->passes()) {
+            $input = $request->all();
+            $input['image'] = time().'.'.$request->image->getClientOriginalExtension();
+            $foto = $input['image'];
+            $request->image->move(public_path('images/pacientes'), $foto);
+
+            $paciente = Paciente::find($id);
+            $fotoAtual = $paciente->foto;
+            if($fotoAtual){
+                if(file_exists(public_path('images/pacientes/'.$fotoAtual))){
+                    unlink(public_path('images/pacientes/'.$fotoAtual));
+                }
+            }
+            $paciente->foto = $foto;
+            $paciente->update();
+            return response()->json(['success'=>'done']);
+        }
+        return response()->json(['error'=>$validator->errors()->all()]);
     }
 
 }

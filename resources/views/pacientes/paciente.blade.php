@@ -6,22 +6,6 @@
 @stop
 
 @push('css')
-    <style>
-        .tarde{background: #075936 !important; text-transform: uppercase}
-        .noite{background: #272727 !important; text-transform: uppercase}
-        .manha{text-transform: uppercase}
-
-
-        .input-small{
-            width: 33px;
-            text-align: center;
-            font-size: 19px;
-            margin-top: -6px;
-            border: 0px;
-            font-weight: bold;
-            color: #3c8dbc;
-        }
-    </style>
 
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
     @endpush
@@ -29,10 +13,20 @@
     <div class="col-md-3">
         <div class="box box-primary">
             <div class="box-body box-profile">
-                <img class="profile-user-img img-responsive img-circle" src="{{$paciente->foto == "" ? "/images/user.png" : $paciente->foto}}" alt="User profile picture">
+                <div class="hiddenFileInputContainter">
+                    <img class="profile-user-img img-responsive img-circle fileDownload"
+                     src="{{$paciente->foto == "" ? "/images/user.png" : '../images/pacientes/'.$paciente->foto}}">
+                    <form enctype="multipart/form-data" id="imageform"  method="POST">
+                        <input type="file" name="image" class="inputimage" accept="image/*" />
+                    </form>
+                </div>
 
-                <h3 class="profile-username text-center">{{$paciente->nome}} ({{$paciente->nascimento->diffForHumans(null,true)}})</h3>
+                <input class="profile-username text-center input-name" value="{{$paciente->nome}}">
+                <h3 ></h3>
                 <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                        <b>Idade:</b> <span class="pull-right input-small idad">{{$paciente->nascimento->diffForHumans(null,true)}} </span>
+                    </li>
                     <li class="list-group-item">
                         <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$paciente->prontuario == "" ? "00" : $paciente->prontuario}}" />
                     </li>
@@ -76,7 +70,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <div class="form-group" >
                         <label>Nascimento:</label>
                         <div class="input-group date">
@@ -88,14 +82,14 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>Identidade</label>
                         <input type="text" class="form-control identidade" value="{{$paciente->identidade}}">
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>CPF:</label>
                         <input type="text" class="form-control cpf" value="{{$paciente->cpf}}">
@@ -108,31 +102,14 @@
                         <input type="text" class="form-control email" value="{{$paciente->email}}">
                     </div>
                 </div>
-
                 <div class="col-md-3">
                     <div class="form-group">
-                        <label>Logradouro</label>
-                        <input type="text" class="form-control logradouro"  value="{{$paciente->logradouro}}">
+                        <label>TELEFONES</label>
+                        <input type="text" class="form-control fones" value="{{$paciente->telefones}}">
                     </div>
                 </div>
 
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Complemento</label>
-                        <input type="text" class="form-control complemento" value="{{$paciente->complemento}}">
-                    </div>
-                </div>
-
-
-
-                <div class="col-md-2">
-                    <div class="form-group">
-                        <label>Bairro</label>
-                        <input type="text" class="form-control bairro" value="{{$paciente->bairro}}">
-                    </div>
-                </div>
-
-                <div class="col-md-1" style="padding: 0px">
+                <div class="col-md-3">
                     <div class="form-group">
                         <label>UF</label>
                         <select id="uf" style="padding: 0"  default="{{$city[0]->uf}}"   class="form-control"></select>
@@ -147,19 +124,34 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label>CEP</label>
-                        <input type="text" class="form-control" value="{{$paciente->cep}}">
+                        <label>Logradouro</label>
+                        <input type="text" class="form-control logradouro"  value="{{$paciente->logradouro}}">
                     </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-2">
                     <div class="form-group">
-                        <label>TELEFONES</label>
-                        <input type="text" class="form-control" value="{{$paciente->telefones}}">
+                        <label>Complemento</label>
+                        <input type="text" class="form-control complemento" value="{{$paciente->complemento}}">
                     </div>
                 </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Bairro</label>
+                        <input type="text" class="form-control bairro" value="{{$paciente->bairro}}">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>CEP</label>
+                        <input type="text" class="form-control cep" value="{{$paciente->cep}}">
+                    </div>
+                </div>
+
                 <div class="pull-left">
                     <button type="button" onclick="addForm()" style="margin: 0px 15px" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
                         Fazer Evolução
@@ -266,9 +258,14 @@
     <script src="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
     <script src="/vendor/artesaos/cidades/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.13/jquery.mask.min.js"></script>
     <script>
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var paciente = "{{$paciente->id}}";
+
+        $('.cpf').mask('000.000.000-00', {reverse: true});
+        $('input[name=nascimento]').mask('00/00/0000');
+        $('.cep').mask('00000-000');
 
         $('#uf').ufs({
             onChange: function(uf){
@@ -281,12 +278,13 @@
             serverSide: true,
             ajax: '/movimentacoes/' + paciente,
             columns: [
-                {data: 'turno', name: 'turno',orderable:true},
-                {data: 'created_at', name: 'created_at'},
+                {data: 'turno', name: 'turno',orderable:false},
+                {data: 'created_at', name: 'created_at',orderable:true},
                 {data: 'type_user', name: 'type_user'},
                 {data: 'descricao', name: 'descricao',orderable:false},
                 {data: 'action', name: 'action', orderable:false},
             ],
+
             "language": {
                 "url": "http://cdn.datatables.net/plug-ins/1.10.16/i18n/Portuguese-Brasil.json"
             }
@@ -377,6 +375,7 @@
                 type: "POST",
                 data: {
                     "_token": "{{ csrf_token() }}",
+                    "name": $('.input-name').val(),
                     "sexo":  $('#sexo').val(),
                     "est": $('#est-civil').val(),
                     "nascimento": $('input[name=nascimento]').val(),
@@ -385,6 +384,14 @@
                     "convenio": $('.conv').val(),
                     "uf": $('#uf').val(),
                     "cidade": $('#cidade').val(),
+                    "identidade": $('.identidade').val(),
+                    "cpf": $('.cpf').val(),
+                    "email": $('.email').val(),
+                    "fones": $('.fones').val(),
+                    "logradouro": $('.logradouro').val(),
+                    "complemento": $('.complemento').val(),
+                    "bairro": $('.bairro').val(),
+                    "cep": $('.cep').val()
                 },
                 beforeSend: function () {
                     $('.loader').fadeIn();
@@ -393,16 +400,41 @@
                     $('.loader').fadeOut("slow");
                 },
                 success: function ($data) {
-                    $('.profile-username').load(' .profile-username')
-                },
-
+                    $('.list-group').load(' .list-group')
+                }
             });
         });
-
 
         $('#datepicker').datepicker({
         format: 'dd/mm/yyyy',
         autoclose: true
         });
+
+
+        /*Image*/
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $("#imageform").on("change", function() {
+            var postData = new FormData($("#imageform")[0]);
+            $.ajax({
+                url: /paciente/+ paciente + '/foto',
+                type: 'POST',
+                processData: false,
+                contentType: false,
+                data: postData,
+                success: function () {
+                    location.reload();
+                },
+                headers: {
+                    "_token": "{{ csrf_token() }}"
+                }
+            });
+        });
+
+
+
     </script>
 @endpush

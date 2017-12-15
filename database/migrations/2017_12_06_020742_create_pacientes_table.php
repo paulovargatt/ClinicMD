@@ -16,25 +16,24 @@ class CreatePacientesTable extends Migration
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-            $table->integer('prontuario');
-            $table->dateTime('cadastro');
+            $table->integer('prontuario')->nullable();;
             $table->dateTime('nascimento')->default('1990-01-01 00:00:00');
-            $table->string('foto');
-            $table->string('convenio');
-            $table->string('matricula');
+            $table->string('foto')->nullable();
+            $table->string('convenio')->nullable();;
+            $table->string('matricula')->nullable();;
             $table->enum('sexo', ['masculino', 'feminino'] );
             $table->enum('est_civil', ['casado', 'solteiro','viuvo', 'separado'] );
-            $table->string('indicacao');
-            $table->string('identidade');
-            $table->string('cpf');
-            $table->string('email');
-            $table->string('logradouro');
-            $table->string('complemento');
-            $table->string('bairro');
+            $table->string('indicacao')->nullable();
+            $table->string('identidade')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('email')->nullable();
+            $table->string('logradouro')->nullable();
+            $table->string('complemento')->nullable();;
+            $table->string('bairro')->nullable();
             $table->integer('city_id')->default('7994');
             $table->string('uf');
-            $table->string('cep');
-            $table->string('telefones');
+            $table->string('cep')->nullable();
+            $table->string('telefones')->nullable();
             $table->timestamps();
         });
     }
