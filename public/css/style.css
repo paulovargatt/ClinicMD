@@ -50,15 +50,16 @@ div.hiddenFileInputContainter {
  height: 108px;
  overflow: hidden;
  vertical-align: middle;
- cursor: pointer;
 }
 .inputimage{
  z-index: 55;
  position: relative;
  opacity: 0;
  cursor: pointer;
- height: 97px;
- width: 222px;
+ height: 98px;
+ width: 109px;
+ text-align: center;
+ margin: 0 auto;
 }
 
 .input-name{

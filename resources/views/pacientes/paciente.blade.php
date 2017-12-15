@@ -17,7 +17,7 @@
                     <img class="profile-user-img img-responsive img-circle fileDownload"
                      src="{{$paciente->foto == "" ? "/images/user.png" : '../images/pacientes/'.$paciente->foto}}">
                     <form enctype="multipart/form-data" id="imageform"  method="POST">
-                        <input type="file" name="image" class="inputimage" accept="image/*" />
+                        <input title="Insira uma Imagem" type="file" name="image" class="inputimage" accept="image/*" />
                     </form>
                 </div>
 
