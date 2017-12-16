@@ -30,9 +30,7 @@
                     <li class="list-group-item">
                         <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$paciente->prontuario == "" ? "00" : $paciente->prontuario}}" />
                     </li>
-                    <li class="list-group-item">
-                        <b>Matricula</b> <input  class="pull-right input-small matricula" value="{{$paciente->matricula == "" ? "#" : $paciente->matricula}}">
-                    </li>
+
                     <li class="list-group-item">
                         <b>Convenio</b> <input c class="pull-right input-small conv" value="{{$paciente->convenio == "" ? "#" : $paciente->convenio}}"/>
                     </li>

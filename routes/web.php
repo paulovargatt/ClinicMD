@@ -15,6 +15,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/paciente/{id}/update', 'Pacientes@updatePaciente');
     Route::post('/paciente/{id}/foto', 'Pacientes@fotoPaciente');
 
+    /*Novo Paciente*/
+    Route::get('/novo', 'Pacientes@novoPaciente');
+    Route::post('/paciente/create', 'Pacientes@createPaciente');
+
+
 
     /*MOVIMENTAÇÕES*/
     Route::get('/movimentacoes/{id}', 'Pacientes@jsonDataPacientes')->name('jsonDataPacientes');

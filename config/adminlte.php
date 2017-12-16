@@ -116,7 +116,7 @@ return [
                 [
                     'text' => 'Cadastrar Paciente',
                     'icon'    => 'user',
-                    'url'  => '',
+                    'url'  => '/novo',
                 ],
                 [
                     'text' => 'Ver Todos',

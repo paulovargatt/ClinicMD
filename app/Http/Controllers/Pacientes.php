@@ -24,13 +24,44 @@ class Pacientes extends Controller
     public function paciente($id)
     {
         $paciente = Paciente::find($id);
-
         $city = DB::table('pacientes')
                 ->join('cidades', 'pacientes.city_id', '=', 'cidades.id')
                 ->select('pacientes.id','cidades.uf', 'cidades.nome as city','cidades.id as idcity')
                 ->where('pacientes.id', $id)
                 ->get()->toArray();
         return view('pacientes.paciente', compact('paciente','city'));
+    }
+
+    public function novoPaciente(){
+        return view('pacientes.novo');
+    }
+    public function createPaciente(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required'
+        ]);
+
+        if ($validator->passes()) {
+            $data = [
+                'sexo' => $request['sexo'],
+                'nome' => $request['name'],
+                'est_civil' => $request['est'],
+                'nascimento' => Carbon::createFromFormat('d/m/Y', $request->get('nascimento')),
+                'prontuario' => $request['prontuario'],
+                'convenio' => $request['convenio'],
+                'uf' => $request['uf'],
+                'city_id' => $request['cidade'],
+                'identidade' => $request['identidade'],
+                'cpf' => $request['cpf'],
+                'email' => $request['email'],
+                'telefones' => $request['fones'],
+                'logradouro' => $request['logradouro'],
+                'bairro' => $request['bairro'],
+                'complemento' => $request['complemento'],
+                'cep' => $request['cep']
+            ];
+            return Paciente::create($data);
+        }
+        return response()->json(['error'=>$validator->errors()->all()]);
     }
 
     public function updatePaciente(Request $request, $id){
