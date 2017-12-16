@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/paciente/{id}', 'Pacientes@paciente')->name('paciente');
     Route::post('/paciente/{id}/update', 'Pacientes@updatePaciente');
     Route::post('/paciente/{id}/foto', 'Pacientes@fotoPaciente');
+    Route::get('/paciente/delete-paciente/{id}', 'Pacientes@deletePaciente');
 
     /*Novo Paciente*/
     Route::get('/novo', 'Pacientes@novoPaciente');

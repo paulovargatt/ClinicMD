@@ -202,6 +202,9 @@
             <!-- /.box-footer -->
 
         </div>
+        <div class="pull-right">
+            <a href="delete-paciente/{{$paciente->id}}"><button class="btn btn-danger btn-xs">Deletar Paciente</button></a>
+        </div>
     </div>
 
 
@@ -249,7 +252,6 @@
         </div>
     </div>
     <!-- /.modal -->
-
 @stop
 
 @push('js')

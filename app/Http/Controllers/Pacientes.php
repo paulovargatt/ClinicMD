@@ -186,4 +186,11 @@ class Pacientes extends Controller
         return response()->json(['error'=>$validator->errors()->all()]);
     }
 
+    public function deletePaciente($id){
+        $paciente = Paciente::find($id);
+        $paciente->delete();
+
+        return redirect('pacientes');
+    }
+
 }

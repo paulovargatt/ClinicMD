@@ -34,6 +34,7 @@ class CreatePacientesTable extends Migration
             $table->string('uf');
             $table->string('cep')->nullable();
             $table->string('telefones')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
