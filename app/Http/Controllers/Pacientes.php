@@ -193,4 +193,15 @@ class Pacientes extends Controller
         return redirect('pacientes');
     }
 
+    public function deletadosPaciente(){
+        $deletados = Paciente::onlyTrashed()->get();
+        return view('pacientes.deletados', compact('deletados'));
+    }
+
+    public function restaurePaciente(Request $request, $id){
+        Paciente::where('id',$id)
+            ->restore();
+        return back();
+    }
+
 }

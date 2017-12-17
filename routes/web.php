@@ -7,7 +7,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', function () {
+        return redirect('pacientes');
+    });
 
     /*PACIENTE*/
     Route::get('/pacientes', 'Pacientes@index')->name('list');
@@ -15,6 +17,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/paciente/{id}/update', 'Pacientes@updatePaciente');
     Route::post('/paciente/{id}/foto', 'Pacientes@fotoPaciente');
     Route::get('/paciente/delete-paciente/{id}', 'Pacientes@deletePaciente');
+    Route::get('/paciente/deletados/vargatt', 'Pacientes@deletadosPaciente');
+    Route::get('/paciente/deletados/restaure/{id}', 'Pacientes@restaurePaciente');
 
     /*Novo Paciente*/
     Route::get('/novo', 'Pacientes@novoPaciente');

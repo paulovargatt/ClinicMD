@@ -52,6 +52,16 @@
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>
                 </a>
+                <form action="#" method="get" class="sidebar-form" style="width: 25%;display: inline-flex;">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" style="height: 28px;"  placeholder="Procurar Paciente">
+                        <span class="input-group-btn">
+                                <button type="submit" style="height: 28px;" name="search" id="search-btn" class="btn btn-flat">
+                                  <i class="fa fa-search" style="    top: -3px; position: relative;"></i>
+                                </button>
+                              </span>
+                    </div>
+                </form>
             @endif
                 <!-- Navbar Right Menu -->
                 <div class="navbar-custom-menu">
@@ -75,6 +85,7 @@
                                     {{ csrf_field() }}
                                 </form>
                             @endif
+
                         </li>
                     </ul>
                 </div>

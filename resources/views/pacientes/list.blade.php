@@ -2,14 +2,17 @@
 
 @section('title', 'AdminLTE')
 
-@section('content_header')
-    <h1>Todos os Pacientes</h1>
-@stop
 
 @section('content')
+<div class="container">
+    <div class="row">
+        <h3> Pesquisar</h3>
+    </div>
+</div>
+
     @foreach($carga as $pacientes)
       <a href="{{url('/paciente/'.$pacientes->id)}}">
-       <div class="col-md-3" style="min-height: 275px!important;max-height: 276px;">
+       <div class="col-md-2" style="min-height: 275px!important;max-height: 276px;padding: 0px 6px;">
            <div class="box box-primary">
             <div class="box-body box-profile">
                  <img class="profile-user-img img-responsive img-circle" style="min-height: 100px;"
@@ -17,14 +20,14 @@
                 <h4 class="text-center">{{$pacientes->nome}}</h4>
                 <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                        <b>Idade:</b> <span class="pull-right input-small idad">{{$pacientes->nascimento->diffForHumans(null,true)}} </span>
+                        <b>Idade:</b> <span class="pull-right  idad">{{$pacientes->nascimento->diffForHumans(null,true)}} </span>
                     </li>
                     <li class="list-group-item">
-                        <b>Prontuario</b> <input class="pull-right input-small pront" value="{{$pacientes->prontuario == "" ? "00" : $pacientes->prontuario}}" />
+                        <b>Prontuario</b> <span class="pull-right pront">{{$pacientes->prontuario}}</span>
                     </li>
 
                     <li class="list-group-item">
-                        <b>Convenio</b> <input c class="pull-right input-small conv" value="{{$pacientes->convenio == "" ? "#" : $pacientes->convenio}}"/>
+                        <b>Convenio</b> <span class="pull-right pront">{{$pacientes->convenio}}</span>
                     </li>
                 </ul>
             </div>
@@ -32,4 +35,10 @@
     </div>
       </a>
         @endforeach
+
+    <div class="container">
+<div class="clear-fix" style=""></div>
+    {{ $carga->links() }}
+</div>
+
 @stop

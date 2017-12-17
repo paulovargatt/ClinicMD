@@ -62,6 +62,10 @@ div.hiddenFileInputContainter {
  margin: 0 auto;
 }
 
+.clear-fix{
+ clear: both!important;
+}
+
 .input-name{
  border: 0px;
  margin-bottom: -5px;

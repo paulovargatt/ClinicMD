@@ -203,7 +203,7 @@
 
         </div>
         <div class="pull-right">
-            <a href="delete-paciente/{{$paciente->id}}"><button class="btn btn-danger btn-xs">Deletar Paciente</button></a>
+            <a onclick="deletePaciente()" data-toggle="confirmation" data-popout="true" data-placement="left" data-original-title="TEM CERTEZA ?"><button class="btn btn-danger btn-xs">Deletar Paciente</button></a>
         </div>
     </div>
 
@@ -367,6 +367,20 @@
                         });
                     }
                 });
+        }
+
+        function deletePaciente() {
+            $('[data-toggle=confirmation]').confirmation({
+                rootSelector: '[data-toggle=confirmation]',
+                btnOkClass:	'btn btn-xs btn-Warning',
+                btnCancelClass: 'btn-xs btn-default',
+                btnOkClass:	'btn btn-xs btn-danger',
+                btnOkLabel:	'Delete ?',
+                btnCancelLabel:	'No',
+                onConfirm: function() {
+                    window.location="/paciente/delete-paciente/"+ paciente;
+                }
+            });
         }
 
         $('#salva-ficha').on('click',function () {

@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'title' => 'Clinica Mãe de Deus',
+    'title' => 'Mãe de Deus',
 
-    'title_prefix' => 'Clinica Mãe de Deus',
+    'title_prefix' => 'Mãe de Deus',
 
-    'title_postfix' => 'Clinica Mãe de Deus',
+    'title_postfix' => 'Mãe de Deus',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>Clinica</b> Mãe de Deus',
+    'logo' => '<b></b> Mãe de Deus',
 
     'logo_mini' => '<b>M</b>D',
 
