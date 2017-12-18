@@ -19,11 +19,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/paciente/delete-paciente/{id}', 'Pacientes@deletePaciente');
     Route::get('/paciente/deletados/vargatt', 'Pacientes@deletadosPaciente');
     Route::get('/paciente/deletados/restaure/{id}', 'Pacientes@restaurePaciente');
-
     /*Novo Paciente*/
     Route::get('/novo', 'Pacientes@novoPaciente');
     Route::post('/paciente/create', 'Pacientes@createPaciente');
-
+    /*Search*/
+    Route::get('/search/pacientes', 'Pacientes@searchPaciente');
 
 
     /*MOVIMENTAÇÕES*/

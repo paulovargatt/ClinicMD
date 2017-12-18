@@ -85,3 +85,7 @@ div.hiddenFileInputContainter {
  padding-left: 0;
  margin-bottom: 7px;
 }
+
+.select2-container{
+ width: 250px!important;
+}

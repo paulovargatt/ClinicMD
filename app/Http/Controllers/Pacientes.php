@@ -204,4 +204,15 @@ class Pacientes extends Controller
         return back();
     }
 
+    public function searchPaciente(Request $request){
+        $pacientes = [];
+        if($request->has('q')) {
+            $search = $request->q;
+            $lps = Paciente::select("id", "nome", "foto")
+                ->where('nome', 'LIKE', "%$search%")
+                ->get();
+        }
+        return response()->json($lps);
+    }
+
 }

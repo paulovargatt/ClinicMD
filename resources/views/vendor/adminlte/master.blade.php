@@ -59,6 +59,57 @@
 @endif
 
 @yield('adminlte_js')
+<script>
 
+    function formatFoto (item) {
+        if (!item.id) {
+            return item.text;
+        }
+        var photo = item.foto;
+
+        if(photo == null){
+            photo = "../user.png";
+        }
+        var baseUrl = "/images/pacientes";
+        var $item = $(
+            '<span><img id="'+this.id+'" src="' + baseUrl + '/' + photo +'" style="width: 55px" class="fotoselect" /> ' + item.text + '</span>'
+        );
+        return $item;
+    }
+
+    $('#select2').select2({
+        language: "pt-BR",
+        placeholder: "Procurar Pacientes",
+        minimumInputLength: 2,
+        multiple: false,
+        templateResult: formatFoto,
+        ajax: {
+            url: '/search/pacientes',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (pacientes) {
+                return {
+                    results:  $.map(pacientes, function (item) {
+                        return {
+                            text: item.nome,
+                            id: item.id,
+                            foto: item.foto
+                        }
+                    })
+                };
+            }
+        }
+    });
+
+    $(document.body).on("change","#select2",function() {
+        var str = "";
+        $("select option:selected").each(function () {
+            str += $(this).val();
+        });
+        //alert(str.slice(0,1));
+       window.location="/paciente/" + str.slice(0,1)
+    });
+
+</script>
 </body>
 </html>
