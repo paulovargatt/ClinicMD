@@ -108,7 +108,7 @@
             str += $(this).val();
         });
         //alert(str.slice(0,1));
-       window.location="/paciente/" + str.slice(0,1)
+       window.location="/paciente/" + str.slice(0,3)
     });
 
 </script>

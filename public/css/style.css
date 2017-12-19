@@ -30,17 +30,14 @@ padding: 4px;
 img.fileDownload
 {
  height: 100px;
- width: 100px;
- vertical-align: middle;
- margin: 0 4px 0 0;
- cursor: pointer;
- position: absolute;
- top: 0px;
- text-align: center;
- margin: 6px auto;
- display: block;
- position: absolute;
- left: 28%;
+    width: 100px;
+    top: 0px;
+    text-align: center;
+    margin: 6px auto;
+    display: block;
+    position: absolute;
+    left: calc(50% - 50px);
+    text-align: center;
 }
 
 div.hiddenFileInputContainter {
