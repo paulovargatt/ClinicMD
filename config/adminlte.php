@@ -15,9 +15,9 @@ return [
 
     'title' => 'Provincia Mae da Providencia',
 
-    'title_prefix' => 'ProvinciaMae da Providencia',
+    'title_prefix' => 'Admin ',
 
-    'title_postfix' => 'Provincia Mae da Providencia',
+    'title_postfix' => '',
 
     /*
     |--------------------------------------------------------------------------

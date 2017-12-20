@@ -44,7 +44,9 @@
 <body class="hold-transition @yield('body_class')">
 
 @yield('body')
-<div class="loader" style="display: none"></div>
+<div class="loader" style="display: none">
+    <div class="spinner"></div>
+</div>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
