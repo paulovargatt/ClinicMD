@@ -11,6 +11,11 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('pacientes');
     });
 
+    /*Senha*/
+    Route::get('/alterar-senha', 'UsersController@senha');
+    Route::POST('/change-password', 'UsersController@changePassword')->name('changePassword');
+
+
     /*PACIENTE*/
     Route::get('/pacientes', 'Pacientes@index')->name('list');
     Route::get('/paciente/{id}', 'Pacientes@paciente')->name('paciente');

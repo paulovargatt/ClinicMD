@@ -49,9 +49,8 @@
             <!-- Header Navbar -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
-                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                    <span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>
-                </a>
+                <i class="fa fa-search search" aria-hidden="true"></i>
+                {{--<span class="sr-only">{{ trans('adminlte::adminlte.toggle_navigation') }}</span>--}}
                 <!--PESQUISA -->
                 <div class="sidebar-form" style="border:0px;width: 25%;display: inline-flex;">
                     <div class="input-group">

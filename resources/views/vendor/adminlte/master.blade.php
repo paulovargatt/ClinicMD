@@ -95,8 +95,9 @@
                             text: item.nome,
                             id: item.id,
                             foto: item.foto
-                        }
-                    })
+                        };
+                    }),
+                        cache: true,
                 };
             }
         }
@@ -104,12 +105,24 @@
 
     $(document.body).on("change","#select2",function() {
         var str = "";
-        $("select option:selected").each(function () {
-            str += $(this).val();
-        });
-        //alert(str.slice(0,1));
-       window.location="/paciente/" + str.slice(0,3)
+        str = $(this).val();
+        opt(str);
+       $(location).attr("href", '/paciente/' + str );
+      // window.location="/paciente/" + str.slice(0,3)
     });
+
+   var opt = function (str) {
+       $("select option:selected").each(function () {
+           console.log(str);
+       });
+   }
+
+    var altura = $(document).height();
+    $(document.body).ready(function() {
+      $('.treeview').addClass('menu-open');
+      $('.treeview-menu').css('display','block');
+        $('.content-wrapper').css('min-height',altura+300);
+   })
 
 </script>
 </body>

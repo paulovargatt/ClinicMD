@@ -13,11 +13,11 @@ return [
     |
     */
 
-    'title' => 'Mãe de Deus',
+    'title' => 'Provincia Mae da Providencia',
 
-    'title_prefix' => 'Mãe de Deus',
+    'title_prefix' => 'ProvinciaMae da Providencia',
 
-    'title_postfix' => 'Mãe de Deus',
+    'title_postfix' => 'Provincia Mae da Providencia',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b></b> Mãe de Deus',
+    'logo' => '<img style="width: 127px;margin-top: 5px;" src="http://vdisk.saojose.g12.br/community/colegio_sao_jose/get/Portal/O_Colegio/Historia/congre.jpg">',
 
     'logo_mini' => '<b>M</b>D',
 
@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'skin' => 'blue-light',
+    'skin' => 'red',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,8 +107,9 @@ return [
     |
     */
 
+
     'menu' => [
-        'Menu',
+        'Menu:',
         [
             'text'    => 'Pacientes',
             'icon'    => 'users',
@@ -121,14 +122,25 @@ return [
                 [
                     'text' => 'Ver Todos',
                     'url'  => '/pacientes',
+                    'icon'    => 'globe',
                 ]
             ],
         ],
+
         [
             'text'    => 'Cadastrar Usuários',
             'icon'    => 'user',
             'can'   => 'admin'
         ],
+
+
+        [
+            'text'    => 'Alterar Senha',
+            'icon'    => 'key',
+            'url'     => 'alterar-senha'
+        ],
+
+
     ],
 
     /*

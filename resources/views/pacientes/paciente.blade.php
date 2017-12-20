@@ -300,6 +300,7 @@
         }
 
         $(document).on('#modal submit', function (e) {
+            $("button[type='submit']").prop("disabled", true);
             e.preventDefault();
             var id = $('#id').val();
             if (save_method == 'edit') {
@@ -317,6 +318,7 @@
                 },
                 complete: function(){
                     $('.loader').fadeOut("slow");
+                    $("button[type='submit']").prop("disabled", false);
                 },
                 success: function ($data) {
                     $('#modal-form').modal('hide');
@@ -324,8 +326,10 @@
                 },
                 error : function(){
                     alert('Não foi possível salvar esse registro');
+                    $("button[type='submit']").prop("disabled", false);
                 }
             });
+
         });
 
         function editMovi(id) {

@@ -4,12 +4,6 @@
 
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <h3> Pesquisar</h3>
-    </div>
-</div>
-
     @foreach($carga as $pacientes)
       <a href="{{url('/paciente/'.$pacientes->id)}}">
        <div class="col-md-2" style="min-height: 275px!important;max-height: 276px;padding: 0px 6px;">
