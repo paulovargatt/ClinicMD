@@ -145,7 +145,13 @@ class Pacientes extends Controller
                 return
                     '<a onclick="editMovi('. $movimentacoes->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a> ' .
                     '<a onclick="deleteMovi(' . $movimentacoes->id . ')" data-toggle="confirmation" data-popout="true" data-placement="left" data-original-title="Deletar ?" class="btn btn-danger btn-xs delete-movimentacao"><i class="glyphicon glyphicon-trash"></i></a>';
+                }elseif (Auth::user()->type == 3)
+                {
+                    return
+                        '<a onclick="editMovi('. $movimentacoes->id .')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i> </a> ' .
+                        '<a onclick="deleteMovi(' . $movimentacoes->id . ')" data-toggle="confirmation" data-popout="true" data-placement="left" data-original-title="Deletar ?" class="btn btn-danger btn-xs delete-movimentacao"><i class="glyphicon glyphicon-trash"></i></a>';
                 }
+
                 })
             ->rawColumns(['turno','action'])
             ->make(true);
