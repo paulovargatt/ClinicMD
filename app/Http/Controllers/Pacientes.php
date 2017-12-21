@@ -170,7 +170,7 @@ class Pacientes extends Controller
 
     public function fotoPaciente(Request $request, $id){
         $validator = Validator::make($request->all(), [
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1048',
         ]);
         if ($validator->passes()) {
             $input = $request->all();

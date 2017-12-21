@@ -8,7 +8,9 @@
 @push('css')
 
     <link rel="stylesheet" href="https://adminlte.io/themes/AdminLTE/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    @endpush
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+
+@endpush
 @section('content')
     <div class="col-md-3">
         <div class="box box-primary">
@@ -259,6 +261,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-confirmation/1.0.5/bootstrap-confirmation.min.js"></script>
     <script src="/vendor/artesaos/cidades/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.13/jquery.mask.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script>
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var paciente = "{{$paciente->id}}";
@@ -443,14 +446,39 @@
                 processData: false,
                 contentType: false,
                 data: postData,
-                success: function () {
-                    location.reload();
+                success: function (data) {
+                    if($.isEmptyObject(data.error)){
+                        location.reload();
+                    }else{
+                        toastr["error"](data.error);
+                    }
                 },
                 headers: {
                     "_token": "{{ csrf_token() }}"
                 }
             });
         });
+
+
+
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
 
 
 
