@@ -183,8 +183,8 @@
                         <tr>
                             <th>Turno</th>
                             <th>Data</th>
-                            <th>Criado Por</th>
-                            <th>Mensagem</th>
+                            <th>Tipo de Usuário:</th>
+                            <th>Evolução</th>
                             <th>Ações</th>
                         </tr>
                         </thead>

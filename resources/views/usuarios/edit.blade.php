@@ -30,6 +30,7 @@
                           <input type="email" class="form-control" name="email" value="{{$user->email}}" placeholder="E-mail">
                       </div>
 
+                      @if ($user->id != Auth::user()->id)
                       <div class="form-group">
                           <label for="exampleInputPassword1">Tipo de usuário</label>
                           <select class="form-control" name="type" >
@@ -38,6 +39,7 @@
                               <option value="3" {{$user->type == 3 ? "selected" : "" }}>Administrador</option>
                           </select>
                       </div>
+                          @endif
 
                   </div>
                   <div class="box-footer">
