@@ -11,9 +11,20 @@ Route::group(['middleware' => ['auth']], function () {
         return redirect('pacientes');
     });
 
+    /**** USUÁRIOS */
     /*Senha*/
     Route::get('/alterar-senha', 'UsersController@senha');
     Route::POST('/change-password', 'UsersController@changePassword')->name('changePassword');
+
+    /*Gerenciamento de usuários*/
+    Route::get('/usuarios', 'UsersController@usuarios')->middleware('can:admin');
+    Route::get('/user/{id}', 'UsersController@usuariosEdit')->middleware('can:admin');
+    Route::post('/user/{id}/update', 'UsersController@usuariosUpdate')->middleware('can:admin');
+
+    /* Cadastro de usuários:*/
+    Route::get('/usuarios/novo', 'UsersController@usuariosNovo')->middleware('can:admin');
+    Route::post('/usuarios/new', 'UsersController@usuariosNew')->middleware('can:admin');
+
 
 
     /*PACIENTE*/

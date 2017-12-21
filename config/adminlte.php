@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'title' => 'Provincia Mae da Providencia',
+    'title' => 'Província Mãe da Providência',
 
-    'title_prefix' => 'Admin ',
+    'title_prefix' => 'Província Mãe da Providência ',
 
     'title_postfix' => '',
 
@@ -115,22 +115,36 @@ return [
             'icon'    => 'users',
             'submenu' => [
                 [
-                    'text' => 'Cadastrar Paciente',
-                    'icon'    => 'user',
-                    'url'  => '/novo',
-                ],
-                [
                     'text' => 'Ver Todos',
                     'url'  => '/pacientes',
                     'icon'    => 'globe',
+                ],
+                [
+                    'text' => 'Cadastrar Paciente',
+                    'icon'    => 'user',
+                    'url'  => '/novo',
                 ]
             ],
         ],
 
         [
-            'text'    => 'Cadastrar Usuários',
+            'text'    => 'Usuários',
             'icon'    => 'user',
-            'can'   => 'admin'
+            'can'   => 'admin',
+            'submenu' => [
+                [
+                    'text' => 'Ver Todos',
+                    'url'  => '/usuarios',
+                    'icon'    => 'globe',
+                    'can'   => 'admin',
+                ],
+                [
+                    'text' => 'Cadastrar Usuários',
+                    'icon'    => 'user',
+                    'url'  => '/usuarios/novo',
+                    'can'   => 'admin',
+                ]
+            ],
         ],
 
 
