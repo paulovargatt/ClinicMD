@@ -244,6 +244,11 @@
                             <textarea class="form-control" rows="3" name="descricao" placeholder="Digite a Evolução Aqui"></textarea>
                         </div>
 
+                     <div class="form-group" style="padding: 0px 13px;margin-top: -25px;">
+                         <label for="exampleInputFile">Anexar Arquivo ?</label>
+                         <input type="file" id="exampleInputFile">
+                     </div>
+
                      <div class="modal-footer">
                          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Fechar</button>
                          <div class="pull-right"><button type="submit" class="btn btn-primary">Salvar</button></div>

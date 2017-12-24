@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'Usuarios')
 
 
 @section('content')
-    <div class="container">
+    <div class="container" style="width: 95%">
       <div class="row">
           <div class="text-center">
               <h2>Usuários cadastrados:</h2>
@@ -12,7 +12,7 @@
           </div>
           @foreach($users as $user)
               <a href="{{url('/user/'.$user->id)}}">
-                  <div class="col-md-3">
+                  <div class="col-md-3" style="padding: 0px 5px; min-height: 150px;">
                       <div class="box box-primary">
                           <div class="box-body box-profile">
                               <h4 class="text-center">{!! $user->name == Auth::user()->name ? "$user->name ( <b style='color:red'>Você</b> )" : $user->name !!}</h4>

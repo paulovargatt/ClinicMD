@@ -41,6 +41,13 @@
                       </div>
                           @endif
 
+                      @if ($user->id != Auth::user()->id)
+                          <div class="form-group">
+                              <label for="Senha">Senha</label>
+                              <input type="password" class="form-control" name="senha" value="" placeholder="Senha">
+                          </div>
+                      @endif
+
                   </div>
                   <div class="box-footer">
                       <button type="submit" class="btn btn-primary">Salvar</button>

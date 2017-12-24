@@ -32,6 +32,9 @@ class UsersController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->type = $request->type;
+        if($request->senha != ''){
+            $user->password = bcrypt($request->senha);
+        }
         $user->update();
         return redirect()->back()->with("success","Atualizado com sucesso");
     }
